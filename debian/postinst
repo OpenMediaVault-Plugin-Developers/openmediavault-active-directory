@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+SERVICE_NAME="active-directory"
+
+case "$1" in
+    configure)
+
+        if ! omv_config_exists "/config/services/${SERVICE_NAME}"; then
+echo "Initial configuration."
+            object="<enable>0</enable>"
+object="<port>0</port>"
+            omv_config_add_element "/config/services" "${SERVICE_NAME}" "${object}" true
+fi
+
+update-rc.d ${SERVICE_NAME} disable
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,7 @@
+Format: http://dep.debian.net/deps/dep5
+Upstream-Contact: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+Source: https://github.com/OpenMediaVault-Plugin-Developers/openmediavault-mcmyadmin
+
+Files: *
+Copyright: 2013 OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+License: GPL-3+

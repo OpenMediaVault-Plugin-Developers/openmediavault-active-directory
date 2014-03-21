@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+SERVICE_NAME="active-directory"
+
+case "$1" in
+    purge)
+        omv_config_delete "//services/${SERVICE_NAME}"
+    ;;
+
+    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ;;
+
+    *)
+        echo "postrm called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,11 @@
+Source: openmediavault-active-directory
+Section: misc
+Priority: optional
+Maintainer: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+Build-Depends: debhelper (>= 8 )
+Standards-Version: 3.9.3
+
+Package: openmediavault-active-directory
+Architecture: all
+Depends: ${misc:Depends}, libkrb53 krb5-config krb5-user
+Description: Connect OpenMediaVault to an Active Directory
