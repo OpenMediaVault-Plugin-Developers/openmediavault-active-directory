@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+db_input low openmediavault-active-directory/question1 || true
+#db_input low openmediavault-active-directory/question2 || true
+
+db_go || true

@@ -4,20 +4,43 @@ set -e
 
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
+. /usr/share/debconf/confmodule
 
 SERVICE_NAME="active-directory"
-
+DC=$(cat /etc/krb5.conf | sed -n -e 's/^.*default_realm = //p')
+db_get openmediavault-active-directory/question1
+ANSWER1=$RET
+#db_get openmediavault-active-directory/question2
+#ANSWER2=$RET
 case "$1" in
     configure)
 
-        if ! omv_config_exists "/config/services/${SERVICE_NAME}"; then
-echo "Initial configuration."
-            object="<enable>0</enable>"
-object="<port>0</port>"
-            omv_config_add_element "/config/services" "${SERVICE_NAME}" "${object}" true
-fi
+	service samba stop
+	service winbind stop
+	service ntp stop
+	ntpdate $DC
+	service ntp start
+	echo nameserver $DC >> /etc/resolv.conf
+	cat /etc/samba/smb.conf | sed "s/security =.*/security = ads/" >/dev/zero
+	echo "    winbind enum users = yes" >> /etc/samba/smb.conf	# needs to be revised, how to add it to global section
+	echo "    winbind enum groups = yes" >> /etc/samba/smb.conf	# needs to be revised, how to add it to global section
+	echo "    idmap uid = 1000-33554431" >> /etc/samba/smb.conf	# needs to be revised, how to add it to global section
+	echo "    idmap gid = 1000-33554431" >> /etc/samba/smb.conf	# needs to be revised, how to add it to global section
+	cat /etc/login.defs | sed "s/UID_MAX                 60000.*/UID_MAX                 33554431/" >/dev/zero #does_not_work_yet
+	cat /etc/login.defs | sed "s/GID_MAX                 60000.*/GID_MAX                 33554431/" >/dev/zero #does_not_work_yet
+	ldconfig
+	net ads join -U $ANSWER1
+	service samba stop
+	service winbind stop
+	service samba start
+	service winbind start
+#        if ! omv_config_exists "/config/services/${SERVICE_NAME}"; then
+#echo "Initial configuration."
+#            object="<enable>0</enable>"
+#object="<port>0</port>"
+#            omv_config_add_element "/config/services" "${SERVICE_NAME}" "${object}" true
+#fi
 
-update-rc.d ${SERVICE_NAME} disable
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

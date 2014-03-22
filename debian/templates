@@ -1,0 +1,8 @@
+Template: openmediavault-active-directory/question1
+Type: [string]
+Default: [Administrator]
+Description: Please type in the user that should be used to join this OpenMediaVault NAS into your AD.
+
+#Template: openmediavault-active-directory/question2
+#Type: [password]
+#Description: Please typ in the password for the User you just chose.
