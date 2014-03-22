@@ -3,7 +3,7 @@
  *
  * @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
  * @author    Volker Theile <volker.theile@openmediavault.org>
- * @copyright Copyright (c) 2009-2013 Volker Theile
+ * @copyright Copyright (c) 2009-2014 Volker Theile
  *
  * OpenMediaVault is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,27 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenMediaVault. If not, see <http://www.gnu.org/licenses/>.
  */
-// require("js/omv/NavigationPanel.js")
-// require("js/omv/FormPanelExt.js")
+// require("js/omv/WorkspaceManager.js")
+// require("js/omv/workspace/form/Panel.js")
 // require("js/omv/form/PasswordField.js")
-// require("js/omv/form/plugins/FieldInfo.js")
-
-Ext.ns("OMV.Module.Privileges");
-
-// Register the menu.
-OMV.NavigationPanelMgr.registerMenu("privileges", "directoryservice", {
-	text: _("Directory Service"),
-	icon: "images/network.png",
-	position: 5
-});
-
-Ext.ns("OMV.Module.Privileges.DirectoryService");
 
 /**
- * @class OMV.Module.Privileges.DirectoryService.ADSettings
+ * @class OMV.module.admin.privilege.directoryservice.Settings
  * @derived OMV.FormPanelExt
  */
-OMV.Module.Privileges.DirectoryService.ADSettings = function(config) {
-	var initialConfig = {
-		rpcService: "DirectoryService",
-		rpcGetMethod: "getADSettings",
-		rpcSetMethod: "setADSettings"
-	};
-	Ext.apply(initialConfig, config);
-	OMV.Module.Privileges.DirectoryService.ADSettings.superclass.
-	  constructor.call(this, initialConfig);
-};
-Ext.extend(OMV.Module.Privileges.DirectoryService.ADSettings,
-  OMV.FormPanelExt, {
-	initComponent : function() {
-		OMV.Module.Privileges.DirectoryService.ADSettings.superclass.
-		  initComponent.apply(this, arguments);
-	},
+Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
+	   extend: "OMV.workspace.form.Panel",
+	   
+	   rpcService: "DirectoryService",
+	   rpcGetMethod: "getSettings",
+	   rpcSetMethod: "setSettings"
 
 	getFormItems : function() {
+		var me = this;
 		return [{
 			xtype: "fieldset",
 			title: _("General settings"),
-			defaults: {
-//				anchor: "100%",
+			fieldDefaults: {
 				labelSeparator: ""
 			},
 			items: [{
@@ -68,22 +46,27 @@ Ext.extend(OMV.Module.Privileges.DirectoryService.ADSettings,
 				name: "dcname",
 				fieldLabel: _("Domain controller name"),
 				allowBlank: false,
-				plugins: [ OMV.form.plugins.FieldInfo ],
-				infoText: _("E.g. host.example.com")
+				plugins: [{
+				      ptype: "fieldinfo",
+				      text: _("E.g. host.example.com")
+				}]
 			},{
 				xtype: "textfield",
 				name: "domainname",
 				fieldLabel: _("Domain name"),
 				allowBlank: false,
-				plugins: [ OMV.form.plugins.FieldInfo ],
-				infoText: _("E.g. example.com")
+				plugins: [{
+				      ptype: "fieldinfo",
+				      text: _("E.g. example.com")
+				}]
 			},{
 				xtype: "textfield",
 				name: "netbiosname",
 				fieldLabel: _("Domain NetBIOS name"),
 				allowBlank: false,
-				plugins: [ OMV.form.plugins.FieldInfo ],
-				infoText: _("E.g. EXAMPLE")
+				plugins: [{
+				      ptype: "fieldinfo",
+				      text: _("E.g. EXAMPLE")
 			},{
 				xtype: "textfield",
 				name: "adminname",
@@ -98,8 +81,20 @@ Ext.extend(OMV.Module.Privileges.DirectoryService.ADSettings,
 		}];
 	}
 });
-OMV.NavigationPanelMgr.registerPanel("privileges", "directoryservice", {
-	cls: OMV.Module.Privileges.DirectoryService.ADSettings,
-	title: _("Active Directory"),
-	position: 10
+
+OMV.WorkspaceManager.registerNode({
+    id: "directoryservice",
+	path: "/privilege",
+	text: _("Directory Service"),
+	icon16: "images/",
+	iconSvg: "images/",
+	position: 
+});
+
+OMV.WorkspaceManager.registerPanel({
+    id: "settings",
+	path: "/privilege/directoryservice",
+	text: _("Settings"),
+	position: ,
+	className: OMV.module.admin.privilege.directoryservice.Settings,
 });
