@@ -27,13 +27,13 @@
  * @derived OMV.FormPanelExt
  */
 Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
-	   extend: "OMV.workspace.form.Panel",
-	   
-	   rpcService: "DirectoryService",
-	   rpcGetMethod: "getSettings",
-	   rpcSetMethod: "setSettings"
+    extend: "OMV.workspace.form.Panel",
 
-	getFormItems : function() {
+    rpcService: "DirectoryService",
+    rpcGetMethod: "getSettings",
+    rpcSetMethod: "setSettings",
+    
+    getFormItems : function() {
 		var me = this;
 		return [{
 			xtype: "fieldset",
@@ -47,8 +47,8 @@ Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
 				fieldLabel: _("Domain controller name"),
 				allowBlank: false,
 				plugins: [{
-				      ptype: "fieldinfo",
-				      text: _("E.g. host.example.com")
+                    ptype: "fieldinfo",
+                    text: _("E.g. host.example.com")
 				}]
 			},{
 				xtype: "textfield",
@@ -56,8 +56,8 @@ Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
 				fieldLabel: _("Domain name"),
 				allowBlank: false,
 				plugins: [{
-				      ptype: "fieldinfo",
-				      text: _("E.g. example.com")
+                    ptype: "fieldinfo",
+                    text: _("E.g. example.com")
 				}]
 			},{
 				xtype: "textfield",
@@ -65,8 +65,9 @@ Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
 				fieldLabel: _("Domain NetBIOS name"),
 				allowBlank: false,
 				plugins: [{
-				      ptype: "fieldinfo",
-				      text: _("E.g. EXAMPLE")
+                    ptype: "fieldinfo",
+                    text: _("E.g. EXAMPLE")
+                }]
 			},{
 				xtype: "textfield",
 				name: "adminname",
@@ -88,13 +89,13 @@ OMV.WorkspaceManager.registerNode({
 	text: _("Directory Service"),
 	icon16: "images/",
 	iconSvg: "images/",
-	position: 
+	position: 60
 });
 
 OMV.WorkspaceManager.registerPanel({
     id: "settings",
 	path: "/privilege/directoryservice",
 	text: _("Settings"),
-	position: ,
-	className: OMV.module.admin.privilege.directoryservice.Settings,
+	position: 10,
+	className: "OMV.module.admin.privilege.directoryservice.Settings"
 });
