@@ -47,17 +47,17 @@ Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
 				fieldLabel: _("Domain controller name"),
 				allowBlank: false,
 				plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("E.g. host.example.com")
+                                      ptype: "fieldinfo",
+                                      text: _("E.g. host.example.com")
 				}]
 			},{
-				xtype: "textfield",
+			   	xtype: "textfield",
 				name: "domainname",
 				fieldLabel: _("Domain name"),
 				allowBlank: false,
 				plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("E.g. example.com")
+                                      ptype: "fieldinfo",
+                                      text: _("E.g. example.com")
 				}]
 			},{
 				xtype: "textfield",
@@ -65,9 +65,9 @@ Ext.define("OMV.module.admin.privilege.directoryservice.Settings", {
 				fieldLabel: _("Domain NetBIOS name"),
 				allowBlank: false,
 				plugins: [{
-                    ptype: "fieldinfo",
-                    text: _("E.g. EXAMPLE")
-                }]
+                                      ptype: "fieldinfo",
+                                      text: _("E.g. EXAMPLE")
+                                }]
 			},{
 				xtype: "textfield",
 				name: "adminname",
