@@ -1,5 +1,6 @@
 Source: openmediavault-active-directory
-Section: misc
+Section: net
+XB-Plugin-Section: administration
 Priority: optional
 Maintainer: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
 Build-Depends: debhelper (>= 8 )
